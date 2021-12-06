@@ -1,0 +1,78 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser, User
+from django.db import models
+
+
+class MyUser(AbstractUser):
+    email = models.EmailField(unique=True)
+
+
+class Teachers(models.Model):
+    user = models.OneToOneField(get_user_model(),
+                                on_delete=models.CASCADE,
+                                primary_key=True)
+    is_teacher = models.BooleanField(default=True)
+
+
+class Groups(models.Model):
+    """
+    Группы
+    """
+    groupName = models.TextField(default='english low 2021.08')
+    status = models.BooleanField(default=True)
+    created = models.DateTimeField()
+
+
+class Students(models.Model):
+    """
+    Студенты
+    """
+    LEVEL_LOW = 'L'
+    LEVEL_MED = 'M'
+    LEVEL_HIGH = 'H'
+
+    LEVEL_CHOICES = [
+        (LEVEL_LOW, 'low'),
+        (LEVEL_MED, 'medium'),
+        (LEVEL_HIGH, 'high'),
+    ]
+    user = models.OneToOneField(get_user_model(),
+                                on_delete=models.CASCADE,
+                                primary_key=True)
+
+    level = models.CharField(max_length=1,
+                              choices=LEVEL_CHOICES,
+                              default='LEVEL_LOW')
+    course = models.TextField(blank=True)
+    status = models.CharField(max_length=1,
+                              choices=[('a', 'active'), ('b', 'blocked')],
+                              default='active')
+
+    def __str__(self):
+        return f"Student <{self.user}>"
+
+
+class Scores(models.Model):
+    """
+    Оценки
+    """
+    # student = models.ForeignKey(Students, on_delete=models.PROTECT)
+    # teacher = models.ForeignKey(Teachers, on_delete=models.PROTECT)
+    group = models.CharField(max_length=255, blank=False)
+    date = models.DateField()
+    score = models.IntegerField()
+
+
+class Courses(models.Model):
+    """
+    Курсы
+    """
+    name = models.TextField(default='How to learn english by 24 days')
+
+
+class Schedule(models.Model):
+    """
+    Расписание занятий
+    """
+    next_lesson = models.DateField()
+    next_lesson_name = models.TextField()
