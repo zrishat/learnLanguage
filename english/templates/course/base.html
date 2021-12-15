@@ -1,0 +1,27 @@
+{% extends 'root.html' %}
+
+{% block page_title %}
+    {{ page_title|title }}
+{% endblock %}
+
+
+{% block main_container %}
+    <div class="menu">
+        <ul>
+            <li>
+                <a href="{% url 'add_course' %}">add course</a>
+            </li>
+            <li>
+                <a href="{% url 'homepage' %}">show all courses</a>
+            </li>
+{#            {% if '/courses/' in request.path %}#}
+{#                <a href="{% url 'delete_course' course_pk %}">delete current course</a>#}
+{#                <a href="{% url 'edit_course' %}">edit current course</a>#}
+{#            {% endif %}#}
+        </ul>
+    </div>
+
+    {% block container %}
+    {% endblock %}
+
+{% endblock %}
