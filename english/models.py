@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
@@ -7,26 +7,20 @@ class MyUser(AbstractUser):
     email = models.EmailField(unique=True)
 
 
-class Teachers(models.Model):
+class Teacher(models.Model):
     user = models.OneToOneField(get_user_model(),
                                 on_delete=models.CASCADE,
                                 primary_key=True)
     is_teacher = models.BooleanField(default=True)
 
 
-class Groups(models.Model):
-    """
-    Группы
-    """
+class Group(models.Model):
     groupName = models.TextField(default='english low 2021.08')
     status = models.BooleanField(default=True)
-    created = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
 
 
-class Students(models.Model):
-    """
-    Студенты
-    """
+class Student(models.Model):
     LEVEL_LOW = 'L'
     LEVEL_MED = 'M'
     LEVEL_HIGH = 'H'
@@ -41,8 +35,8 @@ class Students(models.Model):
                                 primary_key=True)
 
     level = models.CharField(max_length=1,
-                              choices=LEVEL_CHOICES,
-                              default='LEVEL_LOW')
+                             choices=LEVEL_CHOICES,
+                             default='LEVEL_LOW')
     course = models.TextField(blank=True)
     status = models.CharField(max_length=1,
                               choices=[('a', 'active'), ('b', 'blocked')],
@@ -52,27 +46,16 @@ class Students(models.Model):
         return f"Student <{self.user}>"
 
 
-class Scores(models.Model):
-    """
-    Оценки
-    """
-    # student = models.ForeignKey(Students, on_delete=models.PROTECT)
-    # teacher = models.ForeignKey(Teachers, on_delete=models.PROTECT)
+class Score(models.Model):
     group = models.CharField(max_length=255, blank=False)
     date = models.DateField()
     score = models.IntegerField()
 
 
-class Courses(models.Model):
-    """
-    Курсы
-    """
+class Course(models.Model):
     name = models.TextField(default='How to learn english by 24 days')
 
 
 class Schedule(models.Model):
-    """
-    Расписание занятий
-    """
     next_lesson = models.DateField()
     next_lesson_name = models.TextField()
