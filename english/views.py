@@ -20,9 +20,6 @@ class CourseListView(PageTitleMixin, ListView):
     context_object_name = 'courses'
     template_name = 'course/course_list.html'
 
-    def get_queryset(self):
-        return self.model.objects.get_queryset()
-
 
 class CourseDetailView(PageTitleMixin, DetailView):
     model = Course
@@ -50,7 +47,6 @@ class CourseUpdateView(PageTitleMixin, UpdateView):
     page_title = 'Course Update'
     fields = ['name']
     success_url = reverse_lazy('homepage')
-    # template_name_suffix = '_update_form'
     template_name = 'course/course_form.html'
 
 

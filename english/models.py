@@ -47,13 +47,18 @@ class Student(models.Model):
 
 
 class Score(models.Model):
-    group = models.CharField(max_length=255, blank=False)
+    group = models.CharField(max_length=255,
+                             blank=False)
     date = models.DateField()
     score = models.IntegerField()
 
 
 class Course(models.Model):
-    name = models.TextField(default='How to learn english by 24 days')
+    course_author = models.ForeignKey(Teacher,
+                                      on_delete=models.CASCADE,
+                                      default=None)
+    name = models.TextField(default='How to learn english by 24 days',
+                            unique=True)
 
 
 class Schedule(models.Model):

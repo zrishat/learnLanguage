@@ -4,7 +4,7 @@
     <h2>Courses list:</h2>
     <ul>
         {% for course in courses %}
-            <li><a href="courses/{{ course.id }}/">{{ course.name }}</a></li>
+            <li><a href="courses/{{ course.id }}/">[id={{ course.id }}] {{ course.name }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}
