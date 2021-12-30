@@ -3,8 +3,9 @@
 {% block container %}
     <h2>Courses list:</h2>
     <ul>
-        {% for course in courses %}
-            <li><a href="courses/{{ course.id }}/">[id={{ course.id }}] {{ course.name }}</a></li>
+        {% for course in object_list %}
+            <li><a href="courses/{{ course.id }}/">
+                [id={{ course.id }}] {{ course.name }}</a> - [author={{ course.course_author.user }}]</li>
         {% endfor %}
     </ul>
 {% endblock %}

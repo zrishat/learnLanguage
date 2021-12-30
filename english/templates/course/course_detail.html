@@ -1,11 +1,11 @@
 {% extends 'course/base.html' %}
 
 {% block container %}
-    [course_title={{ course.name }}]
+    [course_title={{ object.name }}]
     <br />
-    [id_author={{ course.course_author.user_id }}]
+    [id_author={{ object.course_author.user_id }}]
     <br />
-    [author_name={{ course.course_author.user }}]
+    [author_name={{ object.course_author.user }}]
     <hr>
     <a href="/courses/{{ course.id }}/delete">delete</a>
     <a href="/courses/{{ course.id }}/update">update</a>

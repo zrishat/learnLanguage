@@ -17,8 +17,10 @@ class PageTitleMixin:
 class CourseListView(PageTitleMixin, ListView):
     model = Course
     page_title = 'Course List'
-    context_object_name = 'courses'
     template_name = 'course/course_list.html'
+
+    def get_queryset(self):
+        return super().get_queryset().select_related('course_author__user')
 
 
 class CourseDetailView(PageTitleMixin, DetailView):
@@ -26,13 +28,8 @@ class CourseDetailView(PageTitleMixin, DetailView):
     page_title = 'Course Detail'
     template_name = 'course/course_detail.html'
 
-    def get(self, request, course_pk):
-        course = get_object_or_404(Course, pk=course_pk)
-
-        context = {
-            'course': course
-        }
-        return render(request, 'course/course_detail.html', context)
+    def get_queryset(self):
+        return super().get_queryset().select_related('course_author__user')
 
 
 class CourseDeleteView(PageTitleMixin, DeleteView):
@@ -56,11 +53,3 @@ class CourseCreateView(PageTitleMixin, CreateView):
     success_url = reverse_lazy('homepage')
     fields = '__all__'
     template_name = 'course/course_form.html'
-
-
-# Example FBV
-def course_list(request):
-    context = {
-        'courses': Course.objects.all(),
-    }
-    return render(request, 'course/course_list.html', context=context)

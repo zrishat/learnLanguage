@@ -21,13 +21,13 @@ from learnLanguage import settings
 
 urlpatterns = [
     path('', english.CourseListView.as_view(), name='homepage'),
-    path('courses/<int:course_pk>/', english.CourseDetailView.as_view(), name='detail_course'),
+    path('courses/<int:pk>/', english.CourseDetailView.as_view(), name='detail_course'),
     path('add_course/', english.CourseCreateView.as_view(), name='add_course'),
     path('courses/<int:pk>/delete/', english.CourseDeleteView.as_view(),
          name='delete_course'),
     path('courses/<int:pk>/update/', english.CourseUpdateView.as_view(), name='edit_course'),
 
-    path('courses/', english.course_list),  # example FBV
+    path('courses/', english.CourseListView.as_view()),
     path('admin/', admin.site.urls),
 ]
 
