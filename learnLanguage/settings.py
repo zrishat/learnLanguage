@@ -134,3 +134,6 @@ INTERNAL_IPS = [
     "127.0.0.1",
     "localhost",
 ]
+
+CELERY_BROKER_URL = 'amqp://localhost:5672'
+CELERY_RESULT_BACKEND = 'rpc://'
