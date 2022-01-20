@@ -4,13 +4,18 @@ from .models import MyUser
 
 
 @shared_task
-def save_email():
-    queryset = MyUser.objects.all()
-    with open('result.txt', 'w', encoding='utf-8') as f:
-        for item in queryset:
-            f.write(item.email + '\n')
+def send_mail_client(text, email):
+    send_mail(subject='Письмо от компании',
+              message=text,
+              from_email='no-reply@learnlanguage.com',
+              recipient_list=list(email),
+              fail_silently=False)
 
 
 @shared_task
-def send_mail_task(subject, text, email):
-    send_mail(subject, text, 'no-reply@learnlanguage.com', [email], fail_silently=False)
+def send_mail_company(text, email):
+    send_mail(subject='Письмо от клиента',
+              message=text,
+              from_email=email,
+              recipient_list=list('info@learnlanguage.com'),
+              fail_silently=False)

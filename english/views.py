@@ -1,4 +1,4 @@
-from .tasks import send_mail_task
+from .tasks import send_mail_client, send_mail_company
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
 
@@ -36,15 +36,10 @@ class ContactView(PageTitleMixin, ListView, FormView):
         subject = 'Test message from test website'
         text = form.cleaned_data['message']
         email = form.cleaned_data['email']
-        task = send_mail_task.delay(subject, text, email)
-        print('Task.id: ', task.id)
-
-        # Check if the form is valid:
-        if form.is_valid():
-            print("valid!")
-        else:
-            print("not valid!")
-
+        task = send_mail_client.delay(text, email)
+        print('Task client.id: ', task.id)
+        task = send_mail_company.delay(text, email)
+        print('Task company.id: ', task.id)
         return super().form_valid(form)
 
 
