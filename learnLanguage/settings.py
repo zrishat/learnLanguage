@@ -134,3 +134,6 @@ INTERNAL_IPS = [
     "127.0.0.1",
     "localhost",
 ]
+
+CELERY_BROKER_URL = 'amqp://user:bitnami@localhost'
+CELERY_RESULT_BACKEND = 'rpc://'

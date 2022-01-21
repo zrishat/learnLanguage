@@ -17,3 +17,6 @@ python manage.py runserver
 127.0.0.1:8000/admin/
 
 ```
+
+start rabbitmq (user\bitnami)
+docker-compose up

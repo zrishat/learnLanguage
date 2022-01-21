@@ -1,0 +1,16 @@
+{% extends 'course/base.html' %}
+
+{% block container %}
+    <h2>Contact list:</h2>
+
+    <form method="post" class="form-control">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+    {% endfor %}
+    <button type="submit" value="Send message">Отправить</button>
+    </form>
+{% endblock %}

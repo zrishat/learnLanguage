@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from .tasks import send_mail_client, send_mail_company
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
 
-from english.models import Course
+from english.forms import ContactForm
+from english.models import Course, MyUser
 
 
 class PageTitleMixin:
@@ -21,6 +22,25 @@ class CourseListView(PageTitleMixin, ListView):
 
     def get_queryset(self):
         return super().get_queryset().select_related('course_author__user')
+
+
+class ContactView(PageTitleMixin, ListView, FormView):
+    model = MyUser
+    page_title = 'Contacts List'
+    template_name = 'course/contacts_list.html'
+    fields = '__all__'
+    form_class = ContactForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        subject = 'Test message from test website'
+        text = form.cleaned_data['message']
+        email = form.cleaned_data['email']
+        task = send_mail_client.delay(text, email)
+        print('Task client.id: ', task.id)
+        task = send_mail_company.delay(text, email)
+        print('Task company.id: ', task.id)
+        return super().form_valid(form)
 
 
 class CourseDetailView(PageTitleMixin, DetailView):
