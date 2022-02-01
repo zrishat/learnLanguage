@@ -17,6 +17,14 @@ python manage.py runserver
 127.0.0.1:8000/admin/
 
 ```
-
+- for celery queries:
+```
 start rabbitmq (user\bitnami)
 docker-compose up
+```
+- for add users and courses:
+```python manage.py fill_db```
+- superuser login/password is: 
+```admin/admin```
+- for test drf api:
+```python3 api_requests.py```
