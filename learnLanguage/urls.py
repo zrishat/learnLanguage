@@ -15,21 +15,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
-import english.views as english
+# import english.views as english
+from english import views
 from learnLanguage import settings
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework import routers
+
+drf = routers.DefaultRouter()
+drf.register(r'users', views.UserViewSet)
+drf.register(r'groups', views.GroupViewSet)
 
 urlpatterns = [
-    path('', english.CourseListView.as_view(), name='homepage'),
-    path('courses/<int:pk>/', english.CourseDetailView.as_view(), name='detail_course'),
-    path('add_course/', english.CourseCreateView.as_view(), name='add_course'),
-    path('courses/<int:pk>/delete/', english.CourseDeleteView.as_view(),
+    path('', views.CourseListView.as_view(), name='homepage'),
+    path('courses/<int:pk>/', views.CourseDetailView.as_view(), name='detail_course'),
+    path('add_course/', views.CourseCreateView.as_view(), name='add_course'),
+    path('courses/<int:pk>/delete/', views.CourseDeleteView.as_view(),
          name='delete_course'),
-    path('courses/<int:pk>/update/', english.CourseUpdateView.as_view(), name='edit_course'),
+    path('courses/<int:pk>/update/', views.CourseUpdateView.as_view(), name='edit_course'),
 
-    path('courses/', english.CourseListView.as_view()),
+    path('courses/', views.CourseListView.as_view()),
     path('admin/', admin.site.urls),
-    path('contacts/', english.ContactView.as_view(), name='contacts')
+    path('contacts/', views.ContactView.as_view(), name='contacts'),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api-token-auth/', obtain_auth_token),
+    path('drf/', include(drf.urls)),
 ]
 
 if settings.DEBUG:

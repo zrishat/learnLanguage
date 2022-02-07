@@ -1,3 +1,7 @@
+from django.contrib.auth.models import Group, User
+from rest_framework import viewsets, permissions
+
+from .serializers import UserSerializer, GroupSerializer
 from .tasks import send_mail_client, send_mail_company
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
@@ -73,3 +77,21 @@ class CourseCreateView(PageTitleMixin, CreateView):
     success_url = reverse_lazy('homepage')
     fields = '__all__'
     template_name = 'course/course_form.html'
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = MyUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.AllowAny]
