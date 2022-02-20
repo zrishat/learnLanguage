@@ -1,0 +1,40 @@
+# courses + teachers
+{
+  allCourse{
+    name,
+    id,
+    courseAuthor{
+      user{
+        email
+      }
+    }
+  }
+}
+
+# courses + students
+{
+  allStudents{
+    user{
+      email
+    }
+    course
+  }
+}
+
+# courses + teachers + students
+{
+  allStudents{
+    user {
+      email
+    },
+    course
+  }
+  allCourse{
+		name,
+    courseAuthor{
+      user{
+        email
+      }
+    }
+  }
+}

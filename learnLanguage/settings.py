@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'rest_framework.authtoken',
+    'graphene_django'
 ]
 
 MIDDLEWARE = [
@@ -155,4 +156,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ]
+}
+
+GRAPHENE = {
+    'SCHEMA': 'learnLanguage.schema.schema'
 }

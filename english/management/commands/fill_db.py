@@ -34,7 +34,8 @@ class Command(BaseCommand):
                 Teacher.objects.create(user_id=u.id)
             if 'student' in user:
                 u = MyUser.objects.get(username=user)
-                Student.objects.create(user_id=u.id)
+                Student.objects.create(user_id=u.id,
+                                       course='Новый супер курс 0')
 
         # Добавить курсы
         for course_id in range(10):
