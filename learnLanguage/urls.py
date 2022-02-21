@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-# import english.views as english
 from english import views
 from learnLanguage import settings
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import routers
+from graphene_django.views import GraphQLView
 
 drf = routers.DefaultRouter()
 drf.register(r'users', views.UserViewSet)
@@ -39,6 +39,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api-token-auth/', obtain_auth_token),
     path('drf/', include(drf.urls)),
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
 ]
 
 if settings.DEBUG:
