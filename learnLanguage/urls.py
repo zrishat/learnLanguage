@@ -40,6 +40,7 @@ urlpatterns = [
     path('api-token-auth/', obtain_auth_token),
     path('drf/', include(drf.urls)),
     path('graphql/', GraphQLView.as_view(graphiql=True)),
+    path('frontend/', views.FrontendView.as_view(), name='frontend')
 ]
 
 if settings.DEBUG:

@@ -1,10 +1,11 @@
 from django.contrib.auth.models import Group, User
+from django.views import View
 from rest_framework import viewsets, permissions
 
 from .serializers import UserSerializer, GroupSerializer
 from .tasks import send_mail_client, send_mail_company
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView, TemplateView
 
 from english.forms import ContactForm
 from english.models import Course, MyUser
@@ -17,6 +18,11 @@ class PageTitleMixin:
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['page_title'] = self.page_title
         return context
+
+
+class FrontendView(PageTitleMixin, TemplateView):
+    page_title = 'Frontend'
+    template_name = './frontend.html'
 
 
 class CourseListView(PageTitleMixin, ListView):
