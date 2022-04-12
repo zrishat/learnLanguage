@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group, User
 from django.views import View
 from rest_framework import viewsets, permissions
 
-from .serializers import UserSerializer, GroupSerializer
+from .serializers import UserSerializer, GroupSerializer, CourseSerializer
 from .tasks import send_mail_client, send_mail_company
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView, TemplateView
@@ -100,4 +100,13 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class CoursesViewSet(viewsets.ModelViewSet):
+    """
+    API courses
+    """
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
     permission_classes = [permissions.AllowAny]
