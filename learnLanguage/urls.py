@@ -24,6 +24,7 @@ from graphene_django.views import GraphQLView
 drf = routers.DefaultRouter()
 drf.register(r'users', views.UserViewSet)
 drf.register(r'groups', views.GroupViewSet)
+drf.register(r'courses', views.CoursesViewSet)
 
 urlpatterns = [
     path('', views.CourseListView.as_view(), name='homepage'),
